@@ -4,20 +4,20 @@ from newsapi import NewsApiClient
 from datetime import datetime, timedelta
 import os
 
-def fetch_bitcoin_data(start_date, end_date):
+def fetch_crypto_data(crypto_symbol, start_date, end_date):
     """
-    Fetch Bitcoin price data from Yahoo Finance
+    Fetch cryptocurrency price data from Yahoo Finance
     """
-    btc_data = yf.download("BTC-USD", start=start_date, end=end_date)
-    btc_data = btc_data.reset_index()
-    btc_data = btc_data[["Date", "Close"]]
-    btc_data.columns = ["Date", "Price"]
-    btc_data["Date"] = pd.to_datetime(btc_data["Date"]).dt.date  # Convert to date
-    return btc_data
+    crypto_data = yf.download(f"{crypto_symbol}-USD", start=start_date, end=end_date)
+    crypto_data = crypto_data.reset_index()
+    crypto_data = crypto_data[["Date", "Close"]]
+    crypto_data.columns = ["Date", "Price"]
+    crypto_data["Date"] = pd.to_datetime(crypto_data["Date"]).dt.date  # Convert to date
+    return crypto_data
 
-def fetch_news_data(start_date, end_date):
+def fetch_news_data(crypto_name, start_date, end_date):
     """
-    Fetch news data related to Bitcoin from NewsAPI
+    Fetch news data related to the specified cryptocurrency from NewsAPI
     """
     newsapi = NewsApiClient(api_key=os.environ['NEWSAPI_KEY'])
     
@@ -30,7 +30,7 @@ def fetch_news_data(start_date, end_date):
     
     while current_date <= end_date:
         try:
-            articles = newsapi.get_everything(q="bitcoin",
+            articles = newsapi.get_everything(q=crypto_name,
                                               from_param=current_date.strftime("%Y-%m-%d"),
                                               to=min(current_date + timedelta(days=7), end_date).strftime("%Y-%m-%d"),
                                               language="en",

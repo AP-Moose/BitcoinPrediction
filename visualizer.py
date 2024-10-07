@@ -1,13 +1,13 @@
 import plotly.graph_objects as go
 import pandas as pd
 
-def plot_bitcoin_price(btc_data):
+def plot_crypto_price(crypto_data, crypto_name):
     """
-    Plot historical Bitcoin price
+    Plot historical cryptocurrency price
     """
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x=btc_data["Date"], y=btc_data["Price"], mode="lines", name="Bitcoin Price"))
-    fig.update_layout(title="Historical Bitcoin Price", xaxis_title="Date", yaxis_title="Price (USD)")
+    fig.add_trace(go.Scatter(x=crypto_data["Date"], y=crypto_data["Price"], mode="lines", name=f"{crypto_name} Price"))
+    fig.update_layout(title=f"Historical {crypto_name} Price", xaxis_title="Date", yaxis_title="Price (USD)")
     return fig
 
 def plot_sentiment_trend(sentiment_scores):
@@ -19,7 +19,7 @@ def plot_sentiment_trend(sentiment_scores):
     fig.update_layout(title="Sentiment Trend", xaxis_title="Date", yaxis_title="Sentiment Score")
     return fig
 
-def plot_prediction(data, predictions, prediction_period):
+def plot_prediction(data, predictions, prediction_period, crypto_name):
     """
     Plot historical data and predictions
     """
@@ -40,6 +40,5 @@ def plot_prediction(data, predictions, prediction_period):
     
     fig.add_trace(go.Scatter(x=future_dates, y=predictions, mode="lines", name="Predicted Price", line=dict(dash="dash")))
     
-    fig.update_layout(title=f"Bitcoin Price Prediction ({prediction_period})", xaxis_title="Date", yaxis_title="Price (USD)")
+    fig.update_layout(title=f"{crypto_name} Price Prediction ({prediction_period})", xaxis_title="Date", yaxis_title="Price (USD)")
     return fig
-
