@@ -928,7 +928,6 @@ name = "repl-nix-workspace"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
-    { name = "keras" },
     { name = "newsapi-python" },
     { name = "nltk" },
     { name = "pandas" },
@@ -941,14 +940,13 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "keras" },
     { name = "newsapi-python", specifier = ">=0.2.7" },
     { name = "nltk", specifier = ">=3.9.1" },
     { name = "pandas", specifier = ">=2.2.3" },
     { name = "plotly", specifier = ">=5.24.1" },
     { name = "scikit-learn", specifier = ">=1.5.2" },
     { name = "streamlit", specifier = ">=1.39.0" },
-    { name = "tensorflow" },
+    { name = "tensorflow", specifier = ">=2.17.0" },
     { name = "yfinance", specifier = ">=0.2.44" },
 ]
 
