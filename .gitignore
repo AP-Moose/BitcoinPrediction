@@ -1,0 +1,42 @@
+# Python-related
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environment
+venv/
+env/
+.env
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Data files (adjust as needed)
+*.csv
+*.json
+*.pkl
+
+# Logs
+*.log
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDE-specific
+.vscode/
+.idea/
+
+# Replit-specific
+.replit
+.breakpoints
+replit.nix
+
+# Large model files
+*.h5
+*.keras
+
+# Specific to your project (adjust as needed)
+# data/
+# models/
