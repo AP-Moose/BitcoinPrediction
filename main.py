@@ -15,6 +15,7 @@ st.title("Bitcoin Price Predictor")
 # Sidebar for user input
 st.sidebar.header("User Input")
 prediction_period = st.sidebar.selectbox("Select Prediction Period", ["Daily", "Weekly", "Monthly"])
+model_type = st.sidebar.selectbox("Select Model Type", ["Random Forest", "LSTM"])
 
 # Set the default start date to 30 days ago
 default_start_date = datetime.now() - timedelta(days=30)
@@ -37,8 +38,9 @@ else:
     combined_data = pd.merge(btc_data, sentiment_scores, on="Date", how="inner")
 
     # Train model and make predictions
-    model, scaler = train_model(combined_data)
-    predictions = make_prediction(model, scaler, combined_data, prediction_period)
+    model_type_param = "rf" if model_type == "Random Forest" else "lstm"
+    model, scaler = train_model(combined_data, model_type=model_type_param)
+    predictions = make_prediction(model, scaler, combined_data, prediction_period, model_type=model_type_param)
 
     # Display results
     st.header("Bitcoin Price Analysis and Prediction")
@@ -55,7 +57,7 @@ else:
         fig_sentiment = plot_sentiment_trend(sentiment_scores)
         st.plotly_chart(fig_sentiment, use_container_width=True)
 
-    st.subheader(f"Bitcoin Price Prediction ({prediction_period})")
+    st.subheader(f"Bitcoin Price Prediction ({prediction_period}) - {model_type} Model")
     fig_prediction = plot_prediction(combined_data, predictions, prediction_period)
     st.plotly_chart(fig_prediction, use_container_width=True)
 
