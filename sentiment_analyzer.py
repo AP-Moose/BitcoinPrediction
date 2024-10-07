@@ -1,19 +1,14 @@
-import nltk
-from nltk.sentiment import SentimentIntensityAnalyzer
 import pandas as pd
-
-nltk.download("vader_lexicon", quiet=True)
+from textblob import TextBlob
 
 def analyze_sentiment(news_data):
     """
-    Analyze sentiment of news data using NLTK's VADER sentiment analyzer
+    Analyze sentiment of news data using TextBlob
     """
-    sia = SentimentIntensityAnalyzer()
-    
     def get_sentiment_score(text):
         if pd.isna(text):
             return 0
-        return sia.polarity_scores(str(text))["compound"]
+        return TextBlob(str(text)).sentiment.polarity
     
     news_data["title_sentiment"] = news_data["title"].apply(get_sentiment_score)
     news_data["description_sentiment"] = news_data["description"].apply(get_sentiment_score)
