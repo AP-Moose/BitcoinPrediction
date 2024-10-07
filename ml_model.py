@@ -36,15 +36,14 @@ def train_model(data):
     
     return model, scaler
 
-def make_prediction(model, data, prediction_period):
+def make_prediction(model, scaler, data, prediction_period):
     """
     Make predictions using the trained model
     """
     features = ["Price", "sentiment_score"]
     X, _ = prepare_data(data, "Price", features)
     
-    scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(X)
+    X_scaled = scaler.transform(X)
     
     last_date = data["Date"].iloc[-1]
     
@@ -65,4 +64,3 @@ def make_prediction(model, data, prediction_period):
         X_scaled = np.vstack([X_scaled, new_row])
     
     return predictions
-

@@ -2,7 +2,7 @@ import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 import pandas as pd
 
-nltk.download("vader_lexicon")
+nltk.download("vader_lexicon", quiet=True)
 
 def analyze_sentiment(news_data):
     """
@@ -11,7 +11,9 @@ def analyze_sentiment(news_data):
     sia = SentimentIntensityAnalyzer()
     
     def get_sentiment_score(text):
-        return sia.polarity_scores(text)["compound"]
+        if pd.isna(text):
+            return 0
+        return sia.polarity_scores(str(text))["compound"]
     
     news_data["title_sentiment"] = news_data["title"].apply(get_sentiment_score)
     news_data["description_sentiment"] = news_data["description"].apply(get_sentiment_score)
@@ -20,4 +22,3 @@ def analyze_sentiment(news_data):
     
     sentiment_scores = news_data.groupby("Date")["sentiment_score"].mean().reset_index()
     return sentiment_scores
-
